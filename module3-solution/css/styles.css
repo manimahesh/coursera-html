@@ -27,7 +27,6 @@ body {
     text-shadow: 1px 1px 1px #222;
     margin-top: 0;
     margin-bottom: 0;
-    border-style: none;
 }
 
 .navbar-brand a:hover, .navbar-brand a:focus {
@@ -39,7 +38,7 @@ body {
     margin-top: -30px;
 }
 
-.navbar-header button.navbar-toggle, .navbar-header .icon-bar {
+.navbar-header button.navbar-toggle, .icon-bar {
     border: 1px solid #61122f;
 }
 #nav-list {
