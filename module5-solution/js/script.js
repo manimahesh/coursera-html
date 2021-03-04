@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 showLoading("#main-content");
 $ajaxUtils.sendGetRequest(
   allCategoriesUrl,
-  [...], // ***** <---- TODO: STEP 1: Substitute [...] ******
+  buildAndShowHomeHTML,
   true); // Explicitly setting the flag to get JSON from server processed into an object literal
 });
 // *** finish **
@@ -101,8 +101,8 @@ function buildAndShowHomeHTML (categories) {
       // TODO: STEP 2: Here, call chooseRandomCategory, passing it retrieved 'categories'
       // Pay attention to what type of data that function returns vs what the chosenCategoryShortName
       // variable's name implies it expects.
-      // var chosenCategoryShortName = ....
-
+      var chosenCategoryShortName = "'" + chooseRandomCategory(categories).short_name + "'"; 
+      console.log("Selected Short Name: " + chosenCategoryShortName);
 
       // TODO: STEP 3: Substitute {{randomCategoryShortName}} in the home html snippet with the
       // chosen category from STEP 2. Use existing insertProperty function for that purpose.
@@ -115,14 +115,14 @@ function buildAndShowHomeHTML (categories) {
       // Hint: you need to surround the chosen category short name with something before inserting
       // it into the home html snippet.
       //
-      // var homeHtmlToInsertIntoMainPage = ....
-
+      var homeHtmlToInsertIntoMainPage = homeHtml;
+      homeHtmlToInsertIntoMainPage = insertProperty(homeHtml, "randomCategoryShortName", chosenCategoryShortName);
 
       // TODO: STEP 4: Insert the the produced HTML in STEP 3 into the main page
       // Use the existing insertHtml function for that purpose. Look through this code for an example
       // of how to do that.
       // ....
-
+      insertHtml("#main-content", homeHtmlToInsertIntoMainPage);
     },
     false); // False here because we are getting just regular HTML from the server, so no need to process JSON.
 }
@@ -132,6 +132,7 @@ function buildAndShowHomeHTML (categories) {
 function chooseRandomCategory (categories) {
   // Choose a random index into the array (from 0 inclusively until array length (exclusively))
   var randomArrayIndex = Math.floor(Math.random() * categories.length);
+  console.log("Returning short name: " + categories[randomArrayIndex].short_name);
 
   // return category object with that randomArrayIndex
   return categories[randomArrayIndex];
@@ -193,6 +194,7 @@ function buildCategoriesViewHtml(categories,
   finalHtml += "<section class='row'>";
 
   // Loop over categories
+  console.log("Inside buildCategoriesViewHtml. Categories Length: " + categories.length);
   for (var i = 0; i < categories.length; i++) {
     // Insert category values
     var html = categoryHtml;
